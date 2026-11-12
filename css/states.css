@@ -1,0 +1,141 @@
+/* Shared states that span components and so come after them all: the small-label type scale, hover / press / focus, segmented controls and the frosted close buttons. */
+
+/* ---- Small uppercase labels: one type style everywhere ---- */
+.cs-rich .cs-eyebrow,
+.modal-kicker,
+.cs-nc-kicker,
+.wh-date,
+.cs-rows dt,
+.ft-top,
+.tm-label,
+.cs-nc-label,
+.cs-mini {
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+}
+/* ---- Hover, press and focus, shared by every control ---- */
+/* round chips: one hover (purple icon, small lift) and a focus ring that shows on white chips in both themes */
+.modal-close:hover,
+.case-close:hover,
+.px-close:hover,
+.lb .icon-chip:hover {
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+.icon-chip:focus-visible,
+.ft-ic:focus-visible,
+.theme-sw:focus-visible {
+  box-shadow:
+    0 0 0 3px var(--bg),
+    0 0 0 6px var(--accent),
+    0 10px 34px 2px rgb(30 27 43/0.08);
+}
+/* pressed: every control gives a small squeeze, so taps get an answer too */
+.btn:active,
+.cs-proto-btn:active,
+.pw-submit:active,
+.px-open:active,
+.icon-chip:active,
+.ft-ic:active,
+.ft-top:active,
+.theme-sw:active,
+.brand:active,
+.tabs button:active,
+.toc-home:active,
+.cs-next-case:active {
+  transform: scale(0.96);
+}
+.btn-primary:active,
+.pw-submit:active {
+  filter: brightness(0.92);
+}
+/* small uppercase labels get a touch larger on phones */
+@media (max-width: 640px) {
+  .cs-rich .cs-eyebrow,
+  .modal-kicker,
+  .cs-nc-kicker,
+  .cs-nc-label,
+  .wh-date,
+  .cs-rows dt,
+  .tm-label,
+  .cs-mini {
+    font-size: 12px;
+  }
+}
+.lb .lb-prev:hover,
+.lb .lb-next:hover {
+  transform: translateY(-2px);
+}
+/* ---- Talks tile and segmented controls ---- */
+/* a narrow talks tile shows the latest talk only */
+@container (max-width: 220px) {
+  .talks-in .talks-list li:nth-child(n + 2),
+  .talks-in .talks-event,
+  .talks-in .talks-desc {
+    display: none;
+  }
+}
+/* segmented controls (filter tabs, reading mode): the pill from slidingThumb() in js/lib/dom.js slides
+   under the buttons, so the pressed button itself stays transparent */
+.seg-thumb.still {
+  transition: none;
+}
+.tabs button,
+.cs-mode-seg button {
+  position: relative;
+  z-index: 1;
+}
+.tabs button[aria-pressed="true"],
+.cs-mode-seg button[aria-pressed="true"] {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+/* ---- Close buttons: the same frosted glass circle as the logo and the day/night switch ---- */
+.case-close,
+.modal-close,
+.px-close,
+.lb .icon-chip {
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  min-height: 46px;
+  color: #1e1b2b;
+  background: rgb(255 255 255/0.42);
+  border: 1px solid rgb(255 255 255/0.55);
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  backdrop-filter: blur(18px) saturate(1.6);
+  box-shadow: 0 10px 34px 2px rgb(30 27 43/0.1);
+}
+.case-close:hover,
+.modal-close:hover,
+.px-close:hover,
+.lb .icon-chip:hover {
+  background: rgb(255 255 255/0.42);
+  box-shadow: 0 18px 44px 3px rgb(30 27 43/0.18);
+}
+/* over dark content, in dark mode, on the dark prototype header and over the lightbox */
+.case-close.on-dark,
+:root[data-theme="dark"] .case-close,
+:root[data-theme="dark"] .modal-close,
+.px-close,
+.lb .icon-chip {
+  color: #f4f2fa;
+  background: rgb(19 17 26/0.38);
+  border-color: rgb(255 255 255/0.14);
+}
+.case-close.on-dark:hover,
+:root[data-theme="dark"] .case-close:hover,
+:root[data-theme="dark"] .modal-close:hover,
+.px-close:hover,
+.lb .icon-chip:hover {
+  color: #c9b8ff;
+  background: rgb(19 17 26/0.38);
+}
+/* lined up with the logo and the switch, 14px from the edges */
+.case-close,
+.wh-box .modal-close,
+.lb .lb-close {
+  top: 14px;
+  right: 14px;
+}

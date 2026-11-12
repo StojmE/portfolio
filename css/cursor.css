@@ -1,0 +1,134 @@
+/* The custom cursor, the cursor bubble and the click echo. */
+
+/* click echo: the arrow leaves a soft ghost of itself inside a slow, quiet halo */
+.wave {
+  position: fixed;
+  z-index: 200;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+.wave::before,
+.wave::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform, opacity;
+}
+.wave::before {
+  width: 76px;
+  height: 76px;
+  margin: -38px 0 0 -38px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(106 75 216/0.2) 0%,
+    rgb(106 75 216/0.09) 48%,
+    rgb(106 75 216/0) 72%
+  );
+  animation: echoHalo 0.72s cubic-bezier(0.17, 0.86, 0.3, 1) forwards;
+}
+.wave::after {
+  width: 26px;
+  height: 26px;
+  margin: -3px 0 0 -5px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Cpath d='M5 3 L5 19.4 L9.4 15.3 L12.1 21.5 L15.1 20.1 L12.4 14.1 L18.4 13.8 Z' fill='%236A4BD8'/%3E%3C/svg%3E")
+    center/contain no-repeat;
+  transform-origin: 5px 3px;
+  animation: echoArrow 0.6s cubic-bezier(0.22, 0.9, 0.32, 1) forwards;
+}
+/* clickable things: the purple arrow with click lines */
+.tile,
+.tile *,
+a[href],
+a[href] *,
+button:not(:disabled),
+button:not(:disabled) *,
+label[for],
+.cs-shot,
+.cs-next-case,
+.cs-next-case *,
+.cs-proto,
+.cs-proto *,
+.px-open,
+.brand,
+.brand *,
+.toc-home,
+.case-toc a {
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg stroke='%236A4BD8' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M8 3.2 8 0.8'/%3E%3Cpath d='M3.6 5 2 3.4'/%3E%3Cpath d='M12.4 5 14 3.4'/%3E%3Cpath d='M2.8 9.2 0.6 9.2'/%3E%3C/g%3E%3Cpath d='M8 7 L8 23.4 L12.4 19.3 L15.1 25.5 L18.1 24.1 L15.4 18.1 L21.4 17.8 Z' fill='%236A4BD8' stroke='%23FFFFFF' stroke-width='1.35' stroke-linejoin='round'/%3E%3C/svg%3E")
+      8 7,
+    pointer !important;
+}
+.wave-emoji {
+  display: inline-block;
+  transform-origin: 70% 70%;
+  animation: handWave 2.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wave-emoji {
+    animation: none;
+  }
+}
+/* cursor chat bubble */
+#bubble {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 97;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-9999px, -9999px) scale(0.92);
+  transition:
+    opacity 0.2s ease,
+    transform 0.22s var(--ease-smooth);
+}
+@media (prefers-reduced-motion: reduce) {
+  #bubble {
+    transition: opacity 0.2s ease !important;
+  }
+}
+#bubble.on {
+  opacity: 1;
+}
+#bubble .bub {
+  position: relative;
+  background: var(--ink);
+  color: var(--card);
+  font-family: var(--body);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.2;
+  padding: 9px 13px;
+  border-radius: 14px;
+  white-space: nowrap;
+  box-shadow: 0 10px 22px rgb(30 27 43/0.16);
+}
+#bubble .bub::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--ink);
+  border-radius: 2px;
+  bottom: -3px;
+  left: 16px;
+  transform: rotate(45deg);
+}
+#bubble.p-tr .bub::after {
+  right: 16px;
+  left: auto;
+  bottom: -3px;
+}
+#bubble.p-bl .bub::after {
+  left: 16px;
+  top: -3px;
+  bottom: auto;
+}
+#bubble.p-br .bub::after {
+  right: 16px;
+  left: auto;
+  top: -3px;
+  bottom: auto;
+}

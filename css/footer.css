@@ -1,0 +1,75 @@
+/* Footer: links, back to top and the sign-off. */
+
+.ft-links {
+  display: flex;
+  gap: 10px;
+}
+.ft-top:hover svg {
+  transform: translateY(-2px);
+}
+.ft-sign {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.ft-sign:hover .ft-oni {
+  transform: rotate(-12deg) translateY(-1px);
+}
+.ft-ic:hover {
+  transform: translateY(-2px);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.ft-top:hover {
+  color: var(--accent);
+  background: var(--bg2);
+}
+.ft-ic svg {
+  width: 18px;
+  height: 18px;
+}
+.ft-top svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.25s var(--ease-spring);
+}
+.ft-oni {
+  width: 16px;
+  height: 15px;
+  flex-shrink: 0;
+  transition: transform 0.35s var(--ease-spring);
+}
+.ft-ic {
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    transform 0.25s var(--ease-spring);
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: #ffffff;
+  color: #1e1b2b;
+  box-shadow: var(--shadow-rest);
+}
+.ft-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 500 11px/1 var(--mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 999px;
+  transition:
+    color 0.2s,
+    background-color 0.2s;
+}

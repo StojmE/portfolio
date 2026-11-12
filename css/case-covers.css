@@ -1,0 +1,112 @@
+/* Case-study covers: the logo, title, tags and screenshots shown on tiles, at the top of a case study and on the previous / next cards. */
+
+/* case-study covers built from elements (scale with the tile via container units) */
+.cover {
+  --cv-bg: var(--cv-bg-l);
+  --cv-ink: var(--cv-ink-l);
+  --cv-kick: var(--cv-kick-l);
+  position: absolute;
+  inset: 0;
+  container-type: inline-size;
+  background: var(--cv-bg);
+  overflow: hidden;
+  pointer-events: none;
+  transition: background-color 0.45s ease;
+}
+.cv-in {
+  position: absolute;
+  inset: 0;
+}
+.cover .cv-logo {
+  position: static;
+  display: block;
+  width: auto;
+  color: var(--cv-ink);
+  margin: 0 0 4.6cqw;
+}
+.cover .cv-logo-widex {
+  height: 2.5cqw;
+}
+.cover .cv-logo-swisscard {
+  height: 3.5cqw;
+}
+.cover .cv-logo-nrth {
+  height: 2.7cqw;
+}
+.cover .cv-logo-codefu {
+  height: 2.3cqw;
+}
+.cover .cv-accent {
+  fill: #fb5050;
+}
+.cover .cv-text {
+  position: absolute;
+  left: 15.7cqw;
+  right: 8cqw;
+  top: 12.6cqw;
+}
+.cv-shot {
+  position: absolute;
+  bottom: 0;
+  height: auto;
+  display: block;
+}
+.cv-phone {
+  box-shadow: none;
+  bottom: auto;
+}
+@container (max-width:380px) {
+  .cover .cv-kicker {
+    display: none;
+  }
+}
+/* covers follow the theme: deeper, calmer versions in dark mode */
+.cover .cv-title,
+.cover .cv-kicker,
+.cover .cv-logo {
+  transition: color 0.45s ease;
+}
+:root[data-theme="dark"] .cover-widex {
+  --cv-bg: #3a2630;
+  --cv-ink: #ffe7dc;
+  --cv-kick: #ffb899;
+}
+:root[data-theme="dark"] .cover-swisscard {
+  --cv-bg: #2e2748;
+  --cv-ink: #f4f2fa;
+  --cv-kick: #d6ccfa;
+}
+:root[data-theme="dark"] .cover-codefu {
+  --cv-bg: #24202f;
+  --cv-ink: #f4f2fa;
+  --cv-kick: #a7a1b8;
+}
+:root[data-theme="dark"] .cover-nrth {
+  --cv-bg: #4a33a8;
+  --cv-ink: #ffffff;
+  --cv-kick: #d6ccfa;
+}
+.cover .cv-title {
+  position: static;
+  max-width: 70cqw;
+  margin: 0;
+  font-family: var(--display);
+  line-height: 1.06;
+  color: var(--cv-ink);
+  text-wrap: pretty;
+  font-size: calc(4.75cqw * 1.05);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+}
+.cover .cv-kicker {
+  position: static;
+  margin: 3.4cqw 0 0;
+  font-family: var(--mono);
+  font-size: max(12px, 1.75cqw);
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  color: var(--cv-kick);
+}
+.cv-kicker {
+  font-weight: 500;
+}

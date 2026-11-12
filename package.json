@@ -1,0 +1,19 @@
+{
+  "name": "emche-design-portfolio",
+  "private": true,
+  "description": "Portfolio of Emilija Stojmenovska, Senior Product Designer",
+  "scripts": {
+    "start": "http-server -p 4173 -c-1 .",
+    "test": "playwright test",
+    "lint": "eslint js && html-validate index.html",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.10.2",
+    "@playwright/test": "1.56.0",
+    "eslint": "8.57.0",
+    "html-validate": "8.18.2",
+    "http-server": "14.1.1",
+    "prettier": "3.3.3"
+  }
+}

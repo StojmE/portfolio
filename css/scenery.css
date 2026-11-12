@@ -1,0 +1,79 @@
+/* The seasonal scenery band along the bottom of the page (drawn by js/scenery.js). */
+
+.meadow-note {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.bloom {
+  pointer-events: none;
+  display: block;
+  color: var(--ink);
+  transform: rotate(var(--bend, 0deg));
+  transform-origin: 50% 100%;
+  transition: transform 0.85s var(--ease-smooth);
+  will-change: transform;
+}
+.bloom .idle {
+  display: block;
+  transform-origin: 50% 100%;
+  animation: breeze 6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.75s);
+}
+.bloom svg {
+  display: block;
+}
+/* winter only: a little snow drifting through the band */
+.snow {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .snow {
+    display: none;
+  }
+  .bloom .idle {
+    animation: none;
+  }
+  .bloom {
+    transition: none;
+  }
+}
+/* the little meadow that closes the page */
+/* the sidebar replaces the jump pills on wide screens */
+.meadow {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+  padding-top: 34px;
+  height: 120px;
+  overflow: hidden;
+}
+.blooms {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 6px;
+}
+.snow i {
+  position: absolute;
+  top: -8px;
+  width: var(--s);
+  height: var(--s);
+  border-radius: 50%;
+  background: #ffffff;
+  opacity: 0.85;
+  animation: snowfall var(--d) linear infinite;
+  animation-delay: var(--dl);
+}

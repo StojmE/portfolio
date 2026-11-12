@@ -1,0 +1,253 @@
+/* Every @keyframes animation, in alphabetical order. Order doesn't matter for keyframes, so they live together. */
+
+@keyframes brandBlink {
+  0%,
+  55% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes breeze {
+  0%,
+  100% {
+    transform: rotate(calc(var(--amp, 1) * -1.4deg));
+  }
+  50% {
+    transform: rotate(calc(var(--amp, 1) * 1.4deg));
+  }
+}
+@keyframes csModeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+@keyframes dsCaret {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes echoArrow {
+  0% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  45% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1.26);
+    opacity: 0;
+  }
+}
+@keyframes echoHalo {
+  0% {
+    transform: scale(0.3);
+    opacity: 1;
+  }
+  40% {
+    opacity: 0.72;
+  }
+  100% {
+    transform: scale(3.8);
+    opacity: 0;
+  }
+}
+@keyframes gmFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4%);
+  }
+}
+@keyframes gmSent {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(0.86) rotate(-6deg);
+  }
+  60% {
+    transform: translateY(-14%) scale(1.08) rotate(4deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes handWave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(14deg);
+  }
+  20% {
+    transform: rotate(-8deg);
+  }
+  30% {
+    transform: rotate(14deg);
+  }
+  40% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  60%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+@keyframes liHop {
+  0% {
+    transform: none;
+  }
+  35% {
+    transform: translateY(-38%) scale(1.12);
+  }
+  60% {
+    transform: translateY(6%) scale(0.94, 1.06);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes livePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(47 164 99/0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 8px rgb(47 164 99/0);
+  }
+}
+@keyframes liWave {
+  0% {
+    transform: none;
+  }
+  30% {
+    transform: rotate(-7deg);
+  }
+  60% {
+    transform: rotate(4deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes mdWrite {
+  0% {
+    stroke-dashoffset: 1;
+    fill-opacity: 0;
+  }
+  65% {
+    stroke-dashoffset: 0;
+    fill-opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    fill-opacity: 1;
+  }
+}
+@keyframes mdWrite2 {
+  0% {
+    stroke-dashoffset: 1;
+    fill-opacity: 0;
+  }
+  65% {
+    stroke-dashoffset: 0;
+    fill-opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    fill-opacity: 1;
+  }
+}
+@keyframes petalFall {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  10% {
+    opacity: 0.95;
+  }
+  50% {
+    transform: translate(var(--sway), 55cqh) rotate(200deg);
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--sway) * -0.4), 115cqh) rotate(400deg);
+  }
+}
+@keyframes pwShake {
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+  75% {
+    transform: translateX(-2px);
+  }
+}
+@keyframes pxBob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+@keyframes pxspin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes pxWaves {
+  50% {
+    opacity: 0.25;
+  }
+}
+@keyframes skShimmer {
+  from {
+    background-position: 130% 0;
+  }
+  to {
+    background-position: -90% 0;
+  }
+}
+@keyframes snowfall {
+  0% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(130px);
+  }
+}
+@keyframes tickDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes vnSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes writeLn {
+  from {
+    stroke-dashoffset: 21;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

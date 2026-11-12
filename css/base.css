@@ -1,0 +1,152 @@
+/* Base: reset, design tokens (colours, radii, shadows, motion; dark mode under [data-theme="dark"]), typography and global states. */
+
+/* base reset */
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  --sk-shine: rgb(255 255 255/0.55);
+}
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+  font-synthesis: none;
+  font-synthesis-weight: none;
+}
+img {
+  max-width: 100%;
+}
+[hidden]:not([hidden="until-found" i]) {
+  display: none !important;
+}
+:root {
+  --bg: #eceaf2;
+  --card: #fdfcff;
+  --ink: #1e1b2b;
+  --muted: #5e5970;
+  --line: #dcd7e7;
+  --accent: #6a4bd8;
+  --accent-soft: #d6ccfa;
+  --bg2: #eee9fc;
+  --accent-strong: #4a30b0;
+  --tag-dark: #2a2340;
+  --ease-spring: cubic-bezier(0.34, 1.45, 0.5, 1);
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-rest: 0 10px 34px 2px rgb(30 27 43/0.08);
+  --shadow-hover: 0 16px 34px rgb(30 27 43/0.12);
+  --shadow-dialog: 0 30px 70px rgb(30 27 43/0.24);
+  --r-lg: 32px;
+  --r-md: 20px;
+  --r-sm: 12px;
+  --accent-text: #5b3fc4; /* 6.5:1 on the canvas */
+  /* secondary accent: warm peach that complements the lavender */
+  --accent2: #f7a889;
+  --accent2-soft: #fde7dc;
+  --accent2-text: #a34524; /* 5.1:1 or better on every light surface */
+  --display: "DM Serif Display", Georgia, serif;
+  --display-sans: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --body: "Geist", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  /* refined arrow cursor: ink arrow with an ivory halo — never the pointer hand */
+  --cur: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Cpath d='M5 3 L5 19.4 L9.4 15.3 L12.1 21.5 L15.1 20.1 L12.4 14.1 L18.4 13.8 Z' fill='%231E1B2B' stroke='%23F5F4F8' stroke-width='1.35' stroke-linejoin='round'/%3E%3C/svg%3E")
+      5 3,
+    default;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #13111a;
+  --bg2: #2a2340;
+  --card: #1c1926;
+  --ink: #eeebf6;
+  --muted: #a7a1b8;
+  --line: #2e2a3b;
+  --accent-text: #d6ccfa;
+  --accent2-soft: #3a2630;
+  --accent2-text: #ffb899;
+  color-scheme: dark;
+  --sk-shine: rgb(255 255 255/0.06);
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 15px/1.5 var(--body);
+  padding: 16px;
+  padding-bottom: 132px;
+  -webkit-font-smoothing: antialiased;
+}
+.mono {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+/* two-tone focus ring: a light halo inside a dark one, so it clears 3:1 on photos, dark tiles and the ivory canvas.
+   The transparent outline is what Windows High Contrast mode paints. */
+:focus-visible {
+  outline: 3px solid transparent;
+  outline-offset: 2px;
+  box-shadow:
+    0 0 0 3px var(--card),
+    0 0 0 6px var(--ink);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+input[type="password"] {
+  cursor: text;
+}
+/* footer: links, back to top, onigiri sign-off */
+.site-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin: 64px 0 0;
+}
+/* skeleton: tile-shaped placeholders shimmer until fonts and images are ready */
+.page-note {
+  margin: 52px 0 0;
+  text-align: center;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(30 27 43/0.18);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+:root[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background-color: rgb(238 235 246/0.2);
+}
+:root[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(201 184 255/0.55);
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(106 75 216/0.55);
+}

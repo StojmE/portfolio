@@ -1,0 +1,1293 @@
+/* The bento grid and every tile: intro, work, contact icons, case-study tiles, testimonials, the upcoming project, talks, the loading skeleton and drag hints. */
+
+html,
+body,
+button,
+a,
+.tile {
+  cursor: var(--cur);
+}
+.stage {
+  padding-top: 64px;
+  display: flex;
+  justify-content: center;
+}
+/* same shrink-to-fit column unit as the fixed grid: never scrolls sideways */
+.grid {
+  --gap: 20px;
+  /* container caps at 1062px (4 × 250.5px + 3 × 20px), shrinking with the viewport below that so it never scrolls sideways */
+  --col: min(calc((1062px - 3 * 20px) / 4), calc((100vw - 32px - 3 * var(--gap)) / 4));
+  display: grid;
+  grid-template-columns: repeat(4, var(--col));
+  grid-auto-rows: var(--col);
+  gap: var(--gap);
+  width: max-content;
+  max-width: 100%;
+  grid-auto-flow: dense;
+}
+/* tile sizing: data-cols and data-rows attributes control grid span */
+.tile {
+  grid-column: span var(--cols, 1);
+  grid-row: span var(--rows, 1);
+  position: relative;
+  perspective: 1200px;
+  /* corner badges sit 14px in and are 24px tall (12px radius): 14 + 12 = 26px keeps the curves parallel */
+  border-radius: 26px;
+  height: 100%;
+  transform: translateZ(0) translateY(0);
+  box-shadow:
+    0 3px 9px rgb(30 27 43/0.05),
+    0 1px 2px rgb(30 27 43/0.03);
+  will-change: box-shadow, transform;
+  transition:
+    box-shadow 0.5s var(--ease-smooth),
+    transform 0.5s var(--ease-smooth),
+    opacity 0.35s ease;
+}
+.tile[data-cols] {
+  --cols: 1;
+}
+.tile[data-cols="2"] {
+  --cols: 2;
+}
+.tile[data-cols="4"] {
+  --cols: 4;
+}
+.tile[data-rows] {
+  --rows: 1;
+}
+.tile[data-rows="2"] {
+  --rows: 2;
+}
+.tile[data-rows="3"] {
+  --rows: 3;
+}
+@media (max-width: 1023px) {
+  .grid {
+    --col: calc((min(100vw, 900px) - 32px - 2 * var(--gap)) / 3);
+    grid-template-columns: repeat(3, var(--col));
+  }
+  .tile[data-cols="4"] {
+    --cols: 3;
+  }
+}
+@media (max-width: 767px) {
+  .grid {
+    --gap: 12px;
+    --col: calc((100vw - 32px - var(--gap)) / 2);
+    grid-template-columns: repeat(2, var(--col));
+  }
+  .tile[data-cols="4"],
+  .tile[data-cols="3"] {
+    --cols: 2;
+  }
+  .tile[data-rows="3"] {
+    --rows: 2;
+  }
+}
+/* responsive grid: 4 columns desktop, 3 tablet, 2 mobile.
+   Tiles never ask for more columns than exist, so the grid wraps instead of spilling sideways. */
+/* levitation shadow (outer) + rounded clip (inner) + parallax image */
+.tile.hovering {
+  transition:
+    box-shadow 0.28s var(--ease-smooth),
+    transform 0.28s var(--ease-smooth);
+}
+.tile:hover,
+.tile:focus-within {
+  box-shadow:
+    0 20px 38px rgb(30 27 43/0.1),
+    0 6px 14px rgb(30 27 43/0.06);
+  transform: translateZ(0) translateY(-5px);
+}
+.tile-in {
+  position: relative;
+  height: 100%;
+  container-type: inline-size;
+  border-radius: inherit;
+  overflow: hidden;
+  background: var(--card);
+  transform: scale(1) rotateX(0) rotateY(0);
+  transition:
+    transform 0.5s var(--ease-smooth),
+    border-color 0.4s;
+  will-change: transform;
+  display: flex;
+}
+.tile.hovering .tile-in {
+  transition: transform 0.12s var(--ease-smooth);
+}
+/* filtered out: the slot keeps the grid's rhythm but its content is genuinely gone,
+   rather than left half-legible at low contrast */
+.tile.dim {
+  pointer-events: none;
+  box-shadow: none;
+}
+.tile .tile-in {
+  transition:
+    transform 0.5s var(--ease-smooth),
+    border-color 0.4s,
+    opacity 0.4s ease,
+    filter 0.4s ease;
+}
+/* filtered out: content stays visible but recedes — faded, desaturated and softly blurred */
+.tile.dim .tile-in {
+  opacity: 0.42;
+  filter: grayscale(0.75);
+}
+.tile.dim .expand-btn {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    visibility 0s linear 0.3s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tile.dim .tile-in {
+    filter: grayscale(0.75);
+  }
+}
+/* TEMPORARY: position numbers to help plan the tile order — delete this block and renumber() to remove */
+.grid.reordering .tile {
+  z-index: 1;
+}
+.grid:has(.tile:active) {
+  user-select: none;
+}
+/* icon-style tiles (gmail / linkedin) */
+.tile-in.icon {
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+.tile-in.icon svg {
+  width: 30%;
+  height: 30%;
+  max-width: 34px;
+  max-height: 34px;
+}
+/* the Gmail mark: floats at rest, "opens" on hover (sides part, flap drops), hops when the email is copied */
+.tile-in.icon .gmail {
+  width: 50%;
+  height: 50%;
+  max-width: 74px;
+  max-height: 74px;
+  overflow: visible;
+}
+.gmail .gm-all {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: gmFloat 3.4s ease-in-out infinite;
+}
+.gmail path {
+  transform-box: fill-box;
+  transition: transform 0.55s var(--ease-spring);
+}
+.gmail .gm-v {
+  transform-origin: 50% 0;
+}
+.tile:hover .gmail .gm-l,
+.tile:focus-within .gmail .gm-l,
+.tile:hover .gmail .gm-d,
+.tile:focus-within .gmail .gm-d {
+  transform: translate(-46px, -10px);
+}
+.tile:hover .gmail .gm-r,
+.tile:focus-within .gmail .gm-r,
+.tile:hover .gmail .gm-y,
+.tile:focus-within .gmail .gm-y {
+  transform: translate(46px, -10px);
+}
+.tile:hover .gmail .gm-v,
+.tile:focus-within .gmail .gm-v {
+  transform: translateY(70px) scaleY(1.06);
+}
+.tile.sent .gmail .gm-all {
+  animation: gmSent 0.7s var(--ease-spring);
+}
+@media (prefers-reduced-motion: reduce) {
+  .gmail .gm-all {
+    animation: none !important;
+  }
+  .gmail path {
+    transition-duration: 0.01ms !important;
+  }
+}
+/* the LinkedIn mark: floats at rest; on hover the whole badge tilts and lifts, letters stay still */
+.tile-in.icon .lnkd {
+  width: 44%;
+  height: 44%;
+  max-width: 66px;
+  max-height: 66px;
+  overflow: visible;
+}
+.lnkd .li-all {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: gmFloat 3.4s ease-in-out infinite;
+  animation-delay: -1.2s;
+}
+.lnkd path {
+  transform-box: fill-box;
+  transition: transform 0.55s var(--ease-spring);
+}
+.lnkd .li-bg {
+  transform-origin: 50% 50%;
+}
+.lnkd .li-stem {
+  transform-origin: 50% 100%;
+}
+.lnkd .li-n {
+  transform-origin: 0 100%;
+}
+.lnkd .li-tilt {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transition: transform 0.55s var(--ease-spring);
+}
+.tile:hover .lnkd .li-tilt,
+.tile:focus-within .lnkd .li-tilt {
+  transform: rotate(-6deg) scale(1.04);
+}
+@media (prefers-reduced-motion: reduce) {
+  .lnkd .li-all,
+  .lnkd .li-dot,
+  .lnkd .li-n {
+    animation: none !important;
+  }
+  .lnkd path {
+    transition-duration: 0.01ms !important;
+  }
+}
+/* the Medium mark: letters are "written" — the outline is traced like a pen stroke, then the ink fills in */
+.tile-in.icon .mdm {
+  width: 44%;
+  height: 44%;
+  max-width: 66px;
+  max-height: 66px;
+  overflow: visible;
+}
+.mdm .md-all {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: gmFloat 3.4s ease-in-out infinite;
+  animation-delay: -2.3s;
+}
+.mdm .md-bg {
+  fill: #111;
+}
+:root[data-theme="dark"] .mdm .md-bg {
+  fill: #f4f2fa;
+}
+:root[data-theme="dark"] .mdm .md-ink {
+  fill: #111;
+  stroke: #111;
+}
+.mdm .md-ink {
+  fill: #fff;
+  stroke: #fff;
+  stroke-width: 9;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+html.loaded:not(.md-written) .mdm .md-ink {
+  animation: mdWrite 1.5s cubic-bezier(0.45, 0.05, 0.35, 1) 0.3s both;
+}
+html.loaded:not(.md-written) .mdm .md-e {
+  animation-delay: 1.1s;
+  animation-duration: 1s;
+}
+.tile:hover .mdm .md-ink,
+.tile:focus-within .mdm .md-ink {
+  animation: mdWrite2 1.5s cubic-bezier(0.45, 0.05, 0.35, 1) both;
+}
+.tile:hover .mdm .md-e,
+.tile:focus-within .mdm .md-e {
+  animation-delay: 0.8s;
+  animation-duration: 1s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mdm .md-all,
+  .mdm .md-ink {
+    animation: none !important;
+  }
+}
+/* content tiles: name card, quotes */
+.tile-in.card {
+  flex-direction: row-reverse;
+  align-items: stretch;
+  gap: 0;
+  justify-content: center;
+  padding: 0 clamp(16px, 5%, 32px);
+}
+.card-copy {
+  flex: 1 1 auto;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px clamp(18px, 5%, 32px);
+}
+.card-copy-inner {
+  text-align: left;
+  max-width: 100%;
+}
+.card-copy h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.14;
+  margin: 0;
+  text-wrap: balance;
+  font-size: clamp(16px, 5.4cqw, 30px);
+}
+.card-copy h2 span {
+  color: var(--accent-text);
+}
+.card-copy p {
+  margin: clamp(6px, 1.8cqw, 12px) 0 0;
+  color: var(--muted);
+  line-height: 1.45;
+  font-size: clamp(12px, 3.2cqw, 16px);
+  max-width: 34ch;
+}
+@media (max-width: 620px) {
+  .card-copy p {
+    display: none;
+  }
+}
+/* image / wireframe tiles */
+.visual {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.ph-img {
+  position: absolute;
+  inset: -6%;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1) translate(0, 0);
+  transition: transform 0.55s var(--ease-smooth);
+  will-change: transform;
+}
+.tile.hovering .ph-img {
+  transition: transform 0.15s var(--ease-smooth);
+}
+/* real case-study covers show clean, without the dark gradient */
+.tile.no-zoom .ph-img {
+  inset: 0;
+}
+/* case-study covers get a soft coral wash so photos sit inside the warm theme; it lifts a little on hover */
+.tile.no-zoom .visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    150deg,
+    rgb(106 75 216/0.26) 0%,
+    rgb(214 204 250/0.1) 50%,
+    rgb(247 168 137/0.2) 100%
+  );
+  transition: opacity 0.45s ease;
+}
+/* the Widex cover shows in its own colours, without the tint */
+.tile.case .visual::after {
+  display: none;
+}
+/* designed covers show in their own colours */
+.tile.no-zoom:hover .visual::after,
+.tile.no-zoom:focus-within .visual::after {
+  opacity: 0.55;
+}
+:root[data-theme="dark"] .tile.no-zoom .visual::after {
+  background: linear-gradient(150deg, rgb(106 75 216/0.26), rgb(19 17 26/0.22));
+}
+.tile-in.visualwrap {
+  position: relative;
+}
+/* password-protected tile indicator: always-visible lock badge, top-left */
+/* password-protected tag: a small, quiet glass chip in the bottom-right corner of the tile */
+.lock-badge {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 2;
+  height: 24px;
+  padding: 0 10px 0 8px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: rgb(30 27 43/0.72);
+  background: rgb(255 255 255/0.5);
+  border: 1px solid rgb(255 255 255/0.6);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  font: 500 10px/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    color 0.35s ease,
+    background-color 0.35s ease,
+    border-color 0.35s ease;
+}
+.lock-badge.on-dark {
+  color: rgb(244 242 250/0.82);
+  background: rgb(19 17 26/0.35);
+  border-color: rgb(255 255 255/0.12);
+}
+.lock-badge svg {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+}
+.expand-btn {
+  opacity: 0;
+  transform: scale(0.72);
+}
+.tile:hover .expand-btn,
+.tile:focus-within .expand-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+/* coming-soon tile: badge and title on top, a kit of wireframe design-system components below */
+.tile-in.soon-in {
+  --ds-purple: #6a4bd8;
+  --ds-lav: #b4a2f7;
+  --ds-peach: #f7a889;
+  --ds-sage: #8cc0a6;
+  --ds-butter: #f4ce6a;
+  --ds-surface: #ffffff;
+  --ds-wire: #d9d3e8;
+  --ds-bar: #e6e1f2;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: clamp(14px, 6cqw, 20px);
+  padding: clamp(52px, 24cqw, 64px) clamp(18px, 8cqw, 26px) clamp(40px, 16cqw, 48px);
+  background: radial-gradient(120% 70% at 100% 0%, rgb(180 162 247/0.3), transparent 60%),
+    radial-gradient(90% 50% at 0% 100%, rgb(247 168 137/0.16), transparent 60%), var(--card);
+}
+:root[data-theme="dark"] .tile-in.soon-in {
+  --ds-surface: #241f33;
+  --ds-wire: #474060;
+  --ds-bar: #332d47;
+}
+.soon-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+/* the badge always sits in the top-left corner; the title and the kit stay centred below it */
+.soon-in .soon-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  height: 24px;
+  padding: 0 10px 0 8px;
+  gap: 5px;
+  font-size: 10.5px;
+}
+.soon-in .soon-badge svg {
+  width: 11px;
+  height: 11px;
+}
+.ds {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 5.2cqw, 16px);
+}
+/* narrow tiles (phones): keep the core pieces so the title still fits */
+@container (max-width: 160px) {
+  .ds-chip,
+  .ds-card,
+  .ds-slider {
+    display: none;
+  }
+  .ds .ds-row:has(.ds-chip) {
+    display: none;
+  }
+}
+.ds i {
+  display: block;
+}
+.ds-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(7px, 3.4cqw, 10px);
+}
+/* primary button */
+.ds-btn {
+  flex: 1;
+  height: clamp(24px, 12cqw, 32px);
+  border-radius: 999px;
+  background: var(--ds-purple);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 14px rgb(106 75 216/0.28);
+}
+.ds-btn i {
+  width: 42%;
+  height: 4px;
+  border-radius: 4px;
+  background: rgb(255 255 255/0.85);
+}
+/* toggle: flips on when the tile is hovered */
+.ds-toggle {
+  width: clamp(36px, 17cqw, 44px);
+  height: clamp(20px, 9.5cqw, 24px);
+  border-radius: 999px;
+  background: var(--ds-wire);
+  padding: 3px;
+  flex-shrink: 0;
+  transition: background-color 0.35s ease;
+}
+.ds-toggle i {
+  height: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgb(30 27 43/0.25);
+  transition: transform 0.4s var(--ease-spring);
+}
+.tile.soon:hover .ds-toggle {
+  background: var(--ds-sage);
+}
+.tile.soon:hover .ds-toggle i {
+  transform: translateX(calc(clamp(36px, 17cqw, 44px) - clamp(20px, 9.5cqw, 24px)));
+}
+/* text field with a blinking caret */
+.ds-input {
+  height: clamp(26px, 12.5cqw, 34px);
+  border-radius: 10px;
+  border: 1.5px solid var(--ds-wire);
+  background: var(--ds-surface);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 10px;
+}
+.ds-text {
+  width: 46%;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--ds-bar);
+}
+.ds-caret {
+  width: 1.5px;
+  height: 46%;
+  background: var(--ds-purple);
+  animation: dsCaret 1.1s steps(1) infinite;
+}
+/* checkbox, a label line and a type specimen */
+.ds-check {
+  width: clamp(18px, 8.5cqw, 22px);
+  height: clamp(18px, 8.5cqw, 22px);
+  border-radius: 6px;
+  background: var(--ds-peach);
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.ds-check svg {
+  width: 70%;
+  height: 70%;
+}
+.ds-line {
+  flex: 1;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--ds-bar);
+}
+.ds-type {
+  font: 400 clamp(20px, 10cqw, 28px) / 1 var(--display);
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+/* colour tokens */
+.ds-swatches {
+  display: flex;
+  gap: clamp(5px, 2.6cqw, 8px);
+}
+.ds-swatches i {
+  flex: 1;
+  aspect-ratio: 1;
+  max-width: 30px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgb(30 27 43/0.06);
+}
+.ds-swatches i:nth-child(1) {
+  background: var(--ds-purple);
+}
+.ds-swatches i:nth-child(2) {
+  background: var(--ds-lav);
+}
+.ds-swatches i:nth-child(3) {
+  background: var(--ds-peach);
+}
+.ds-swatches i:nth-child(4) {
+  background: var(--ds-sage);
+}
+.ds-swatches i:nth-child(5) {
+  background: var(--ds-butter);
+}
+/* slider: the handle glides along when the tile is hovered */
+.ds-slider {
+  position: relative;
+  height: 4px;
+  margin: 6px 4px;
+  border-radius: 4px;
+  background: var(--ds-wire);
+}
+.ds-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 38%;
+  border-radius: 4px;
+  background: var(--ds-lav);
+  transition: width 0.6s var(--ease-smooth);
+}
+.ds-knob {
+  position: absolute;
+  top: 50%;
+  left: 38%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid var(--ds-purple);
+  transition: left 0.6s var(--ease-smooth);
+}
+.tile.soon:hover .ds-fill {
+  width: 72%;
+}
+.tile.soon:hover .ds-knob {
+  left: 72%;
+}
+/* tags */
+.ds-chip {
+  height: clamp(16px, 7.5cqw, 20px);
+  border-radius: 999px;
+}
+.ds-c1 {
+  width: 30%;
+  background: rgb(180 162 247/0.45);
+}
+.ds-c2 {
+  width: 22%;
+  background: rgb(140 192 166/0.5);
+}
+.ds-c3 {
+  width: 26%;
+  background: rgb(244 206 106/0.55);
+}
+/* a list card with an avatar */
+.ds-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: clamp(8px, 4cqw, 12px);
+  border-radius: 14px;
+  background: var(--ds-surface);
+  border: 1.5px solid var(--ds-wire);
+}
+.ds-avatar {
+  width: clamp(22px, 11cqw, 30px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--ds-peach), var(--ds-butter));
+}
+.ds-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.ds-lines i {
+  height: 4px;
+  border-radius: 4px;
+  background: var(--ds-bar);
+}
+.ds-lines i:first-child {
+  width: 80%;
+  background: var(--ds-wire);
+}
+.ds-lines i:last-child {
+  width: 55%;
+}
+/* dark mode: tags use the full token colours, softened, so they stay bright on the dark card */
+:root[data-theme="dark"] .ds-chip {
+  opacity: 0.75;
+}
+:root[data-theme="dark"] .ds-c1 {
+  background: var(--ds-lav);
+}
+:root[data-theme="dark"] .ds-c2 {
+  background: var(--ds-sage);
+}
+:root[data-theme="dark"] .ds-c3 {
+  background: var(--ds-butter);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-caret {
+    animation: none;
+  }
+}
+.soon-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 12px 0 10px;
+  border-radius: 999px;
+  background: #ebe5fd;
+  color: var(--accent-strong);
+  font: 500 11.5px/1 var(--mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.soon-badge svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+/* the title uses the clean UI sans so it reads as part of the component kit */
+.soon-title {
+  margin: 0;
+  font-family: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
+  font-size: clamp(28px, 23cqw, 50px);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  width: min-content; /* one word per line */
+  color: var(--accent-strong); /* the darkest purple */
+}
+/* in dark mode the darkest purple would disappear, so the title uses the light lavender */
+:root[data-theme="dark"] .soon-title {
+  color: #d6ccfa;
+}
+:root[data-theme="dark"] .soon-badge {
+  background: #3a3060;
+  color: #e4dcfb;
+}
+/* drag hint: tiny six dots in the bottom-left corner, quiet until the tile is hovered.
+   The dots are dark on light tiles and light on dark tiles (set from js/ui/grid.js). */
+.drag-hint {
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  z-index: 2;
+  display: flex;
+  color: #1e1b2b;
+  opacity: 0.4;
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    color 0.35s ease;
+}
+.drag-hint.on-dark {
+  color: #f4f2fa;
+}
+.drag-hint svg {
+  width: 8px;
+  height: 12px;
+}
+.tile:hover .drag-hint {
+  opacity: 0.85;
+}
+.tile.dim .drag-hint {
+  opacity: 0;
+}
+/* intro card: pixel warrior sits close to the text */
+.tile-in.card .card-copy {
+  flex: 0 1 auto;
+  max-width: none;
+  padding: 22px clamp(22px, 7%, 40px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(14px, 5cqw, 26px);
+}
+/* intro tile: the greeting and a short introduction beside the portrait */
+/* work-history tile */
+.tile-in.wk {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 4cqw, 14px);
+  padding: 14px;
+}
+.wk-px {
+  width: 52%;
+  aspect-ratio: 1;
+  background: var(--px) center/contain no-repeat;
+  image-rendering: pixelated;
+  animation: pxBob 2.8s steps(2, end) infinite;
+}
+.wk-label {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-align: center;
+}
+.wk-label span {
+  font: 500 11px/1.2 var(--mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+.wk-label b {
+  font: 400 clamp(14px, 8cqw, 19px) / 1.1 var(--display);
+  color: var(--ink);
+}
+.work-tile:hover .wk-px {
+  animation-duration: 1s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wk-px {
+    animation: none;
+  }
+}
+/* intro tile: illustrated avatar in a circle beside the greeting */
+.intro-av {
+  flex: 0 0 auto;
+  width: clamp(76px, 32cqw, 156px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--bg2) center/cover no-repeat; /* the photo is already cropped around the head */
+  box-shadow: 0 0 0 4px var(--bg2);
+}
+:root[data-theme="dark"] .intro-av {
+  background-color: var(--tag-dark);
+  box-shadow: 0 0 0 4px var(--tag-dark);
+}
+.sk-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+.sk-card {
+  align-items: center;
+}
+.sk-icon {
+  align-items: center;
+  justify-content: center;
+}
+.sk-visual {
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.tm-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tm-label {
+  font: 500 11.5px/1 var(--mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+.tm-by {
+  margin: 0;
+  display: flex;
+}
+.tm-who {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.tm-who b {
+  font: 600 13px/1.2 var(--body);
+  color: var(--ink);
+}
+.tm-who span {
+  font: 500 11px/1.3 var(--mono);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@container (max-width:440px) {
+  .tm-head {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tile,
+  .tile-in,
+  .ph-img {
+    transition-duration: 0.01ms !important;
+  }
+}
+html:not(.loaded) .tile-in > :not(.sk),
+html:not(.loaded) .tile > .icon-chip {
+  opacity: 0;
+}
+.tile-in > :not(.sk),
+.tile > .icon-chip {
+  transition: opacity 0.45s ease 0.05s;
+}
+html.loaded .sk {
+  opacity: 0;
+}
+/* case-study tiles: dark by default; a cover image, when there is one, sits on top */
+.tile.case .tile-in {
+  --card: #1c1926;
+  --ink: #eeebf6;
+  --muted: #a7a1b8;
+  --line: #2e2a3b;
+  --accent-text: #d6ccfa;
+  --accent2-text: #ffb899;
+  --sk-shine: rgb(255 255 255/0.06);
+  background: #1c1926;
+  color: var(--ink);
+}
+.tm-mark {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  font-size: clamp(40px, 10cqw, 56px);
+  line-height: 1;
+  height: 0.5em;
+  color: var(--accent-text);
+  margin-top: -0.08em;
+}
+.tm-quote {
+  margin: 0;
+  font-weight: 400;
+  font-size: clamp(14px, 3.9cqw, 20px);
+  line-height: 1.38;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  text-wrap: pretty;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+@container (max-width:440px) {
+  .tm-quote {
+    -webkit-line-clamp: 2;
+    font-size: 14px;
+  }
+}
+.sk {
+  position: absolute;
+  inset: -1px;
+  z-index: 4;
+  border-radius: inherit;
+  background: var(--card);
+  overflow: hidden;
+  pointer-events: none;
+  display: flex;
+  padding: clamp(16px, 8%, 28px);
+  gap: clamp(12px, 5%, 24px);
+  transition: opacity 0.45s ease;
+}
+.sk::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, var(--sk-shine) 50%, transparent 70%);
+  background-size: 220% 100%;
+  animation: skShimmer 1.4s linear infinite;
+}
+.sk-card .sk-av {
+  flex: 0 0 auto;
+  height: 76%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+.sk-visual .sk-lines {
+  flex: 0 0 auto;
+  width: 60%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sk::after {
+    animation: none;
+  }
+}
+/* testimonial tile + dialog: one colour family (lavender), editorial type */
+.tile-in.tm {
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(22px, 6.5cqw, 34px);
+  gap: clamp(14px, 4cqw, 20px);
+  background: var(--card);
+}
+@container (max-width:440px) {
+  .tile-in.tm {
+    gap: 12px;
+    padding: 18px 20px;
+  }
+}
+/* intro tile: work-history preview */
+.card-copy p b {
+  color: var(--ink);
+  font-weight: 600;
+}
+.sk i {
+  display: block;
+  background: var(--line);
+  border-radius: 10px;
+}
+.sk-icon i {
+  width: 30%;
+  max-width: 64px;
+  aspect-ratio: 1;
+  border-radius: 16px;
+}
+@media (hover: none) {
+  .expand-btn {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+/* touch screens: tile buttons are always visible, with a 44px tap area */
+.expand-btn::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+}
+/* the speaking tile wears UXplore's own colours: periwinkle and deep navy */
+.tile-in.talks {
+  --sp-bg: #eef0ff;
+  --sp-ink: #0a047a;
+  --sp-accent: #3f48d9;
+  --sp-muted: #4b4870;
+  --sp-line: rgb(10 4 122/0.14);
+  --sp-desc: #2c2860;
+  --ux-a: #656eff;
+  --ux-b: #0a047a;
+  background: var(--sp-bg);
+  color: var(--sp-ink);
+}
+:root[data-theme="dark"] .tile-in.talks {
+  --sp-bg: #141038;
+  --sp-ink: #eef0ff;
+  --sp-accent: #a6acff;
+  --sp-muted: #b4b3d6;
+  --sp-line: rgb(238 240 255/0.16);
+  --sp-desc: #d9d8f2;
+  --ux-a: #8a91ff;
+  --ux-b: #ffffff;
+}
+.tile.speaking-tile:hover .px-talk .px-waves {
+  animation-duration: 0.7s;
+}
+/* the UXplore logo spans the full width of the tile's text column */
+.ux-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.ux-logo .ux-a {
+  fill: var(--ux-a);
+}
+.ux-logo .ux-b {
+  fill: var(--ux-b);
+}
+.talks-in .talks-title {
+  color: var(--sp-ink);
+  white-space: nowrap;
+}
+.talks-in .talks-date,
+.talks-in .talks-event {
+  color: var(--sp-muted);
+}
+.talks-in .talks-list b {
+  color: var(--sp-ink);
+}
+.talks-in .talks-list li {
+  border-top-color: var(--sp-line);
+}
+/* a slightly heavier rule in the UXplore blue sets the talks apart from the description */
+.talks-in .talks-bottom::before {
+  content: "";
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ux-a);
+  opacity: 0.45;
+}
+.talks-in .talks-desc {
+  color: var(--sp-desc);
+}
+.talks-in .talks-video {
+  color: var(--sp-accent);
+}
+/* layout lives on an inner wrapper so the tile's own container query can reach it */
+.talks-in {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 5cqw, 56px);
+  padding: clamp(22px, 7cqw, 44px);
+}
+.talks-intro {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+/* same type as the AI design system title: extra-bold UI sans in capitals */
+.talks-title {
+  margin: 0;
+  font-family: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
+  font-size: clamp(20px, 4.4cqw, 28px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.talks-desc {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--sp-muted);
+}
+/* logo and title read as one lock-up: just a tiny gap between them */
+.talks-intro .talks-title {
+  margin-top: -4px;
+}
+/* logo and headline sit together at the top; the talks sit together at the bottom */
+/* the title runs on one line across the full width; js/ui/grid.js sizes it to fit exactly */
+.talks-bottom {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.talks-list {
+  flex: 1 1 0;
+  min-width: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.talks-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+.talks-list li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+.talks-list li:last-child {
+  padding-bottom: 0;
+}
+.talks-date,
+.talks-event {
+  font: 500 11.5px/1.3 var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.talks-list b {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+@container (max-width: 640px) {
+  .talks-in {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: clamp(18px, 5cqw, 28px);
+  }
+  .talks-intro,
+  .talks-bottom,
+  .talks-list {
+    flex: none;
+  }
+}
+@container (max-width: 320px) {
+  .talks-in {
+    padding: 24px 22px 44px; /* room at the bottom for the drag dots */
+    justify-content: center; /* illustration, logo, title, text and talks as one group in the middle */
+    gap: 16px;
+  }
+  .talks-in .talks-title {
+    font-size: 24px;
+  }
+  .talks-desc {
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+  .talks-bottom {
+    gap: 10px;
+  }
+  .talks-list li {
+    padding: 11px 0;
+    gap: 3px;
+  }
+  .talks-list b {
+    font-size: 14.5px;
+  }
+  .talks-date,
+  .talks-event {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+  .talks-kind {
+    display: none;
+  }
+}
+@container (max-width: 220px) {
+  .talks-in {
+    padding: 18px 16px 38px;
+    gap: 12px;
+  }
+  .talks-in .talks-title {
+    font-size: 17px;
+  }
+  .talks-desc {
+    font-size: 13px;
+  }
+}
+.talks-video {
+  color: var(--accent-text);
+}
+/* language of the talk: a tiny outlined tag on the tile, a small pill on the talks page */
+.talks-lang {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 5px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  font-size: 0.85em;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  vertical-align: 1px;
+  opacity: 0.85;
+}

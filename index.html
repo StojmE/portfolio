@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <title>Emilija Stojmenovska · Senior Product Designer</title>
+    <meta
+      name="description"
+      content="Portfolio of Emilija Stojmenovska, Senior Product Designer working on complex B2B, FinTech and EdTech products: case studies for Widex, Swisscard, NRTH and CodeFu."
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <!-- link previews (LinkedIn, Slack, iMessage). Once the site has its own domain, make the
+         og:image and og:url values absolute, e.g. https://your-domain/assets/og-image.jpg -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Emilija Stojmenovska · Senior Product Designer" />
+    <meta
+      property="og:description"
+      content="Case studies in B2B commerce, FinTech and EdTech: Widex, Swisscard, NRTH and CodeFu."
+    />
+    <meta property="og:image" content="assets/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Emilija Stojmenovska, Senior Product Designer" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ECEAF2" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#13111A" />
+    <!-- set before the page paints: the theme picked with the day/night switch, or else the system
+         setting (followed live until a choice is saved) -->
+    <script>
+      (() => {
+        const system = matchMedia("(prefers-color-scheme: dark)");
+        const saved = () => {
+          try {
+            const theme = localStorage.getItem("theme");
+            return theme === "light" || theme === "dark" ? theme : null;
+          } catch {
+            return null;
+          }
+        };
+        const apply = () =>
+          (document.documentElement.dataset.theme = saved() || (system.matches ? "dark" : "light"));
+        apply();
+        system.addEventListener("change", apply);
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;800;900&family=DM+Serif+Display&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
+    />
+    <!-- styles, in cascade order: later files build on earlier ones -->
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/controls.css" />
+    <link rel="stylesheet" href="css/grid.css" />
+    <link rel="stylesheet" href="css/case-covers.css" />
+    <link rel="stylesheet" href="css/case-study.css" />
+    <link rel="stylesheet" href="css/dialogs.css" />
+    <link rel="stylesheet" href="css/lightbox.css" />
+    <link rel="stylesheet" href="css/footer.css" />
+    <link rel="stylesheet" href="css/scenery.css" />
+    <link rel="stylesheet" href="css/cursor.css" />
+    <link rel="stylesheet" href="css/states.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+  </head>
+  <body>
+    <header>
+      <h1 class="sr-only" data-t="heading"></h1>
+      <a href="#" class="brand" id="brand" data-t-label="brand.label"
+        ><svg class="brand-oni" viewBox="0 0 24 22" aria-hidden="true">
+          <path
+            d="M12 1.6c1.6 0 2.7.9 3.6 2.3l6.6 11c1.4 2.4-.1 5.4-2.9 5.4H4.7c-2.8 0-4.3-3-2.9-5.4l6.6-11C9.3 2.5 10.4 1.6 12 1.6Z"
+            fill="#FFFFFF"
+            stroke="#1E1B2B"
+            stroke-width="1.6"
+            stroke-linejoin="round"
+          />
+          <path d="M7.4 13.2h9.2c.6 0 1 .4 1 1v6.1H6.4v-6.1c0-.6.4-1 1-1Z" fill="#2F4A3C" /></svg
+        ><span class="brand-word"
+          ><span data-t="brand.first"></span><span><em data-t="brand.second"></em></span></span
+      ></a>
+      <button id="themeSw" class="theme-sw" type="button" aria-pressed="false" data-t-label="theme.toDark">
+        <span class="tlabel" aria-hidden="true"
+          ><i class="d" data-t="theme.day"></i><i class="n" data-t="theme.night"></i
+        ></span>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <mask id="smMask">
+            <rect width="24" height="24" fill="#fff" />
+            <circle class="cut" cx="12" cy="12" r="6.4" />
+          </mask>
+          <circle class="core" cx="12" cy="12" r="5.2" mask="url(#smMask)" />
+          <g class="rays" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <line x1="12" y1="1.7" x2="12" y2="3.5" />
+            <line x1="12" y1="20.5" x2="12" y2="22.3" />
+            <line x1="1.7" y1="12" x2="3.5" y2="12" />
+            <line x1="20.5" y1="12" x2="22.3" y2="12" />
+            <line x1="4.9" y1="4.9" x2="6.2" y2="6.2" />
+            <line x1="17.8" y1="17.8" x2="19.1" y2="19.1" />
+            <line x1="4.9" y1="19.1" x2="6.2" y2="17.8" />
+            <line x1="17.8" y1="6.2" x2="19.1" y2="4.9" />
+          </g>
+        </svg>
+      </button>
+    </header>
+    <nav class="tabs" data-t-label="filters.label">
+      <button type="button" data-f="all" aria-pressed="true" data-t="filters.all"></button
+      ><button type="button" data-f="about" aria-pressed="false" data-t="filters.about"></button
+      ><button type="button" data-f="work" aria-pressed="false" data-t="filters.work"></button
+      ><button
+        type="button"
+        data-f="testimonials"
+        aria-pressed="false"
+        data-t="filters.testimonials"
+      ></button>
+    </nav>
+
+    <main class="stage">
+      <div class="grid" id="grid" data-t-label="tiles.gridLabel" role="list"></div>
+      <p class="sr-only" role="status" aria-live="polite" id="live"></p>
+    </main>
+
+    <div id="caseView" role="dialog" aria-modal="true" data-t-label="caseStudy.dialog">
+      <button type="button" id="caseClose" class="icon-chip case-close" data-t-label="caseStudy.close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6 6 18" />
+        </svg>
+      </button>
+      <nav class="case-toc" id="caseToc" data-t-label="caseStudy.sections" hidden></nav>
+      <div class="case-inner">
+        <div class="case-hero cs-top has-cover" id="caseHero"></div>
+        <span class="mono" id="caseKicker"></span>
+        <h1 id="caseTitle"></h1>
+        <div class="cs-mode" id="caseMode">
+          <div class="cs-mode-seg" role="group" data-t-label="caseStudy.modeLabel">
+            <button type="button" data-mode="full" aria-pressed="true" data-t="caseStudy.modeFull">
+              <span class="cs-mode-time" data-fixed data-time="full"></span>
+            </button>
+            <button type="button" data-mode="scan" aria-pressed="false" data-t="caseStudy.modeScan">
+              <span class="cs-mode-time" data-fixed data-time="scan"></span>
+            </button>
+          </div>
+          <p class="cs-mode-note" id="caseModeNote" data-t="caseStudy.modeScanNote" hidden></p>
+        </div>
+        <div class="case-body cs-rich" id="caseBody"></div>
+      </div>
+    </div>
+
+    <div id="pxOverlay" class="modal-overlay px-overlay" hidden>
+      <div class="px-box" role="dialog" aria-modal="true" aria-labelledby="pxTitle">
+        <div class="px-head">
+          <div class="px-title">
+            <b id="pxTitle" data-t="prototype.title"></b><span data-t="prototype.hint"></span>
+          </div>
+          <div class="px-actions">
+            <a class="px-open" id="pxOpen" data-t="prototype.open"
+              ><span aria-hidden="true" data-fixed>↗</span></a
+            >
+            <button type="button" class="icon-chip px-close" id="pxClose" data-t-label="close">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              >
+                <path d="M6 6l12 12M18 6 6 18" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="px-frame">
+          <div class="px-loading" aria-hidden="true" data-t="prototype.loading">
+            <span data-fixed="before"></span>
+          </div>
+          <div class="px-fallback" hidden>
+            <p data-t="prototype.blocked"></p>
+            <a class="cs-proto-btn" id="pxFallbackLink" data-t="prototype.blockedLink"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="spOverlay" class="modal-overlay sp-overlay wh-overlay" hidden>
+      <div class="modal tm-box sp-box wh-box" role="dialog" aria-modal="true" aria-labelledby="spTitle">
+        <button type="button" class="icon-chip modal-close" id="spClose" data-t-label="close">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          >
+            <path d="M6 6l12 12M18 6 6 18" />
+          </svg>
+        </button>
+        <div class="sp-logo" id="spLogo"></div>
+        <p class="modal-kicker" data-t="talks.kicker"></p>
+        <h2 id="spTitle" class="sp-title" data-t="talks.title"></h2>
+        <p class="sp-lede" data-t="talks.lede"></p>
+        <h3 class="sp-sub" data-t="talks.listHeading"></h3>
+        <ol class="sp-list" data-list="talks"></ol>
+        <div class="modal-actions sp-actions">
+          <a class="btn btn-primary" data-href="speaker" data-t="talks.speakerPage"></a>
+        </div>
+        <h3 class="sp-sub" data-t="talks.photosHeading"></h3>
+        <div class="sp-gallery" data-list="gallery"></div>
+      </div>
+    </div>
+    <div id="tmOverlay" class="modal-overlay tm-overlay" hidden>
+      <div class="modal tm-box" role="dialog" aria-modal="true" aria-labelledby="tmTitle">
+        <button type="button" class="icon-chip modal-close" id="tmClose" data-t-label="close">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          >
+            <path d="M6 6l12 12M18 6 6 18" />
+          </svg>
+        </button>
+        <div class="tm-head">
+          <span class="tm-mark" aria-hidden="true">“</span
+          ><span class="tm-label" id="tmTitle" data-t="testimonialDialog.heading"></span>
+        </div>
+        <blockquote class="tm-full"></blockquote>
+        <p class="tm-by">
+          <span class="tm-who"><b></b><span></span></span>
+        </p>
+      </div>
+    </div>
+    <div id="aboutOverlay" class="modal-overlay" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="abTitle">
+        <button type="button" class="icon-chip modal-close" id="abClose" data-t-label="close">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          >
+            <path d="M6 6l12 12M18 6 6 18" />
+          </svg>
+        </button>
+        <div class="ab-av" role="img" data-t-label="about.portraitAlt"></div>
+        <div class="ab-body">
+          <span class="modal-kicker" data-t="about.kicker"></span>
+          <h2 id="abTitle" data-t="about.title">
+            <span class="wave-emoji" aria-hidden="true" data-fixed>👋</span>
+          </h2>
+          <p class="ab-lede" data-t="about.lede"></p>
+          <p data-t="about.paragraphs.0"></p>
+          <p data-t="about.paragraphs.1"></p>
+          <p data-t="about.paragraphs.2"></p>
+          <div class="modal-actions">
+            <a class="btn btn-primary" id="abContact" data-href="email"
+              ><svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="3" y="5" width="18" height="14" rx="3" />
+                <path d="m4 7 8 6 8-6" /></svg
+              ><span data-t="about.contact"></span
+            ></a>
+            <a class="btn" id="abLinkedIn" data-href="linkedin"
+              ><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4V21H3V9.75Zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.77 2.65 4.77 6.1V21h-4v-4.95c0-1.18-.02-2.7-1.65-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4V9.75Z"
+                /></svg
+              ><span data-t="about.linkedin"></span
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="whOverlay" class="modal-overlay wh-overlay" hidden>
+      <div class="modal tm-box wh-box" role="dialog" aria-modal="true" aria-labelledby="whTitle">
+        <button type="button" class="icon-chip modal-close" id="whClose" data-t-label="close">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          >
+            <path d="M6 6l12 12M18 6 6 18" />
+          </svg>
+        </button>
+        <span class="modal-kicker" data-t="workHistory.kicker"></span>
+        <h2 id="whTitle" class="wh-title" data-t="workHistory.title"></h2>
+        <p class="wh-lede" data-t="workHistory.lede"></p>
+        <ol class="wh-list" data-list="jobs"></ol>
+        <div class="wh-extra" data-list="extras"></div>
+        <div class="modal-actions wh-actions">
+          <a class="btn btn-primary" id="whContact" data-href="email"
+            ><svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="5" width="18" height="14" rx="3" />
+              <path d="m4 7 8 6 8-6" /></svg
+            ><span data-t="workHistory.contact"></span
+          ></a>
+          <a class="btn" id="whLinkedIn" data-href="linkedin"
+            ><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path
+                d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4V21H3V9.75Zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.77 2.65 4.77 6.1V21h-4v-4.95c0-1.18-.02-2.7-1.65-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4V9.75Z"
+              /></svg
+            ><span data-t="workHistory.linkedin"></span
+          ></a>
+        </div>
+      </div>
+    </div>
+    <div id="pwOverlay" class="pw-overlay" hidden>
+      <div class="pw-box" role="dialog" aria-modal="true" aria-labelledby="pwTitle">
+        <button type="button" class="icon-chip modal-close" id="pwCancel" data-t-label="close">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          >
+            <path d="M6 6l12 12M18 6 6 18" />
+          </svg>
+        </button>
+        <div class="pw-icon" aria-hidden="true">
+          <svg viewBox="0 0 96 96" fill="none">
+            <circle cx="48" cy="50" r="40" fill="var(--bg2)" />
+            <path d="M33 44V35a15 15 0 0 1 30 0v9" stroke="#1E1B2B" stroke-width="5" stroke-linecap="round" />
+            <path
+              d="M38 44v-9a10 10 0 0 1 20 0v9"
+              stroke="#B4A2F7"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              opacity=".0"
+            />
+            <rect
+              x="24"
+              y="42"
+              width="48"
+              height="36"
+              rx="11"
+              fill="#6A4BD8"
+              stroke="#1E1B2B"
+              stroke-width="3"
+            />
+            <rect x="29" y="47" width="20" height="5" rx="2.5" fill="#FFFFFF" opacity=".45" />
+            <circle cx="48" cy="58" r="5" fill="#1E1B2B" />
+            <path d="M48 61v7" stroke="#1E1B2B" stroke-width="4.5" stroke-linecap="round" />
+            <path d="M78 22l1.6 4.2 4.2 1.6-4.2 1.6L78 33.6l-1.6-4.2-4.2-1.6 4.2-1.6Z" fill="#F7A889" />
+            <circle cx="17" cy="30" r="3" fill="#F7A889" opacity=".7" />
+          </svg>
+        </div>
+        <h2 id="pwTitle" data-t="password.title"></h2>
+        <p class="pw-sub" data-t="password.text"></p>
+        <form id="pwForm" novalidate>
+          <div class="pw-field">
+            <label class="sr-only" for="pwInput" data-t="password.field"></label>
+            <input
+              type="password"
+              id="pwInput"
+              data-t-placeholder="password.placeholder"
+              autocomplete="off"
+            />
+            <button type="submit" class="pw-submit" data-t-label="password.submitLabel">
+              <span data-t="password.submit"></span
+              ><svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </button>
+          </div>
+          <p id="pwError" class="pw-error" role="alert" data-t="password.error" hidden></p>
+          <p class="pw-ask" data-t="password.ask">
+            <a data-href="emailAccess" data-t="password.askLink" data-fixed></a>
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <footer class="page-note site-foot">
+      <p class="meadow-note" data-t="footer.thanks"></p>
+      <nav class="ft-links" data-t-label="footer.linksLabel">
+        <a class="ft-ic" id="ftMail" data-href="email" data-t-label="footer.email"
+          ><svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <rect x="3" y="5" width="18" height="14" rx="3" />
+            <path d="m4 7 8 6 8-6" /></svg
+        ></a>
+        <a class="ft-ic" id="ftLinkedIn" data-href="linkedin" data-t-label="footer.linkedin"
+          ><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path
+              d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4V21H3V9.75Zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.77 2.65 4.77 6.1V21h-4v-4.95c0-1.18-.02-2.7-1.65-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4V9.75Z"
+            /></svg
+        ></a>
+        <a class="ft-ic" id="ftMedium" data-href="medium" data-t-label="footer.medium"
+          ><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <ellipse cx="7" cy="12" rx="5.5" ry="5.6" />
+            <ellipse cx="16" cy="12" rx="2.7" ry="5.3" />
+            <ellipse cx="21" cy="12" rx="1" ry="4.8" /></svg
+        ></a>
+      </nav>
+      <a href="#" class="ft-top" id="ftTop"
+        ><svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M12 19V5M6 11l6-6 6 6" /></svg
+        ><span data-t="footer.top"></span
+      ></a>
+      <p class="ft-sign">
+        <svg class="ft-oni" viewBox="0 0 24 22" aria-hidden="true">
+          <path
+            d="M12 1.6c1.6 0 2.7.9 3.6 2.3l6.6 11c1.4 2.4-.1 5.4-2.9 5.4H4.7c-2.8 0-4.3-3-2.9-5.4l6.6-11C9.3 2.5 10.4 1.6 12 1.6Z"
+            fill="#FFFFFF"
+            stroke="#1E1B2B"
+            stroke-width="1.6"
+            stroke-linejoin="round"
+          />
+          <path d="M7.4 13.2h9.2c.6 0 1 .4 1 1v6.1H6.4v-6.1c0-.6.4-1 1-1Z" fill="#2F4A3C" /></svg
+        ><span data-t="footer.sign"></span>
+      </p>
+    </footer>
+
+    <div class="meadow" aria-hidden="true"><div class="blooms" id="blooms"></div></div>
+
+    <div id="bubble" aria-hidden="true"><span class="bub" id="bubbleText"></span></div>
+
+    <!-- settings and words -->
+    <script src="js/config.js"></script>
+    <script src="js/content.js"></script>
+    <script src="js/cases/widex.js"></script>
+    <script src="js/cases/swisscard.js"></script>
+    <script src="js/cases/nrth.js"></script>
+    <script src="js/cases/codefu.js"></script>
+    <!-- shared helpers and markup templates -->
+    <script src="js/lib/dom.js"></script>
+    <script src="js/lib/text.js"></script>
+    <script src="js/icons.js"></script>
+    <script src="js/templates/tiles.js"></script>
+    <script src="js/templates/case-study.js"></script>
+    <script src="js/templates/pages.js"></script>
+    <!-- page behaviour -->
+    <script src="js/ui/grid.js"></script>
+    <script src="js/ui/case-view.js"></script>
+    <script src="js/ui/dialogs.js"></script>
+    <script src="js/ui/hover.js"></script>
+    <script src="js/ui/theme.js"></script>
+    <script src="js/ui/filters.js"></script>
+    <script src="js/ui/contrast.js"></script>
+    <script src="js/ui/lightbox.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/scenery.js"></script>
+  </body>
+</html>
