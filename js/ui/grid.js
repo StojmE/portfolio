@@ -58,6 +58,34 @@ function linkTile(tile, url, label) {
   tile.addEventListener("click", () => window.open(url, "_blank", "noopener"));
 }
 
+/* copies text and resolves true on success. navigator.clipboard only exists on secure pages (https or
+   localhost), so everywhere else fall back to a hidden textarea and execCommand */
+async function copyText(text) {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  } catch {
+    /* denied or unavailable: try the fallback below */
+  }
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.setAttribute("readonly", "");
+  ta.style.cssText = "position:fixed;top:0;left:0;opacity:0;pointer-events:none";
+  document.body.appendChild(ta);
+  ta.select();
+  ta.setSelectionRange(0, text.length);
+  let ok = false;
+  try {
+    ok = document.execCommand("copy");
+  } catch {
+    ok = false;
+  }
+  ta.remove();
+  return ok;
+}
+
 /* the email tile copies the address instead of expanding */
 function emailTile(tile, btn) {
   const t = SITE.tiles.email;
@@ -67,9 +95,13 @@ function emailTile(tile, btn) {
     btn.setAttribute("aria-label", t.copy);
   };
   let resetTimer = null;
-  const copy = (e) => {
+  const copy = async (e) => {
     e.stopPropagation();
-    navigator.clipboard?.writeText(EMAIL_ADDRESS).catch(() => {});
+    if (!(await copyText(EMAIL_ADDRESS))) {
+      /* copying is blocked: open the mail app so the click still does something useful */
+      window.location.href = LINKS.email;
+      return;
+    }
     announce(t.announce);
     bubble.say(t.bubbleCopied);
     replayClass(tile, "sent");
