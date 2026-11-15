@@ -237,11 +237,11 @@
 .brand:hover .brand-oni {
   transform: rotate(-10deg) translateY(-2px);
 }
+/* phones: no room beside the filter tabs, and floating at the bottom it covered the tiles,
+   so the logo shows only over an open case study (see case-study.css) */
 @media (max-width: 640px) {
-  .brand {
-    top: auto;
-    bottom: 14px;
-    left: 14px;
+  html:not(.case-open) .brand {
+    display: none;
   }
 }
 .tlabel i {

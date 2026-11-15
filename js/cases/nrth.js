@@ -237,7 +237,7 @@ CASE_CONTENT.nrth = {
                     label: "Design system · Progress indicator",
                     text: "The base progress indicator and its step variants: completed, current, not started, error and disabled. It guides users through linear tasks such as onboarding.",
                     wide: true,
-                    ratio: "1600/836",
+                    ratio: "1600/837",
                   },
                   {
                     img: "assets/nrth-ds-progress-docs.webp",
@@ -245,7 +245,7 @@ CASE_CONTENT.nrth = {
                     label: "Design system · Documentation",
                     text: "Each component comes with documentation: its properties, an annotated anatomy, and behaviour guidelines covering labels, helper text, overflow content and what every state means.",
                     wide: true,
-                    ratio: "1400/1922",
+                    ratio: "1400/1921",
                   },
                 ],
                 layout: "board",

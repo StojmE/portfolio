@@ -154,6 +154,14 @@
   color: var(--muted);
   padding-top: 3px;
 }
+.cs-rows dd a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+:root[data-theme="dark"] .cs-rows dd a {
+  color: #c9b8ff;
+}
 .cs-rows dd {
   margin: 0;
   font-size: 15px;
@@ -1487,7 +1495,7 @@ html.case-open .theme-sw {
   font-weight: 400;
   letter-spacing: 0.04em;
   text-transform: none;
-  opacity: 0.6;
+  opacity: 0.8; /* 0.6 fell below 4.5:1 contrast */
   white-space: nowrap;
 }
 .cs-mode-time:empty {
@@ -1525,4 +1533,26 @@ html.case-open .theme-sw {
   .cs-mode-seg button {
     padding: 0 12px;
   }
+}
+
+/* the cover already shows the case study's title and tags, so the text versions under it are kept
+   for screen readers only (the title stays the page's first heading and takes focus on open) */
+#caseKicker {
+  display: none;
+}
+/* on narrow phones the cover has no room for its tags (case-covers.css), so the text tags show instead */
+@media (max-width: 420px) {
+  #caseKicker {
+    display: block;
+    margin-top: 4px;
+  }
+}
+#caseTitle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }

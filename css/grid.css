@@ -353,11 +353,6 @@ html.loaded:not(.md-written) .mdm .md-e {
   font-size: clamp(12px, 3.2cqw, 16px);
   max-width: 34ch;
 }
-@media (max-width: 620px) {
-  .card-copy p {
-    display: none;
-  }
-}
 /* image / wireframe tiles */
 .visual {
   position: absolute;
