@@ -63,6 +63,13 @@
     <link rel="stylesheet" href="css/cursor.css" />
     <link rel="stylesheet" href="css/states.css" />
     <link rel="stylesheet" href="css/animations.css" />
+    <!-- Vercel Web Analytics: inject() adds the tracking script; it only reports once the site runs on Vercel
+         with Analytics enabled. Loaded from a CDN because this site has no bundler for npm imports. -->
+    <script type="module">
+      import { inject } from "https://cdn.jsdelivr.net/npm/@vercel/analytics@1.5.0/+esm";
+
+      inject();
+    </script>
   </head>
   <body>
     <header>

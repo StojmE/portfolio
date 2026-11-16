@@ -15,5 +15,8 @@
     "html-validate": "8.18.2",
     "http-server": "14.1.1",
     "prettier": "3.3.3"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
   }
 }
