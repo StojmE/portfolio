@@ -85,6 +85,89 @@ a,
     --rows: 2;
   }
 }
+/* phones: each column splits into three tracks, so a 1 × 1 tile spans 3 × 3 and stays square,
+   the three contact tiles share one row, and the work history becomes a short banner */
+@media (max-width: 767px) {
+  .grid {
+    --sub: calc((100vw - 32px - 5 * var(--gap)) / 6);
+    grid-template-columns: repeat(6, var(--sub));
+    grid-auto-rows: var(--sub);
+  }
+  .tile {
+    grid-column: span calc(var(--cols) * 3);
+    grid-row: span calc(var(--rows) * 3);
+  }
+  .grid .tile[data-area="work"] {
+    grid-column: span 6;
+    grid-row: span 2;
+  }
+  .grid .tile[data-area="gmail"],
+  .grid .tile[data-area="linked"],
+  .grid .tile[data-area="medium"] {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .grid .tile[data-area="work"] .tile-in.wk {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 18px;
+    padding: 10px 24px;
+  }
+  .grid .tile[data-area="work"] .wk-px {
+    width: auto;
+    height: 86%;
+  }
+  .grid .tile[data-area="work"] .wk-label {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .grid .tile[data-area="work"] .wk-label b {
+    font-size: 22px;
+  }
+  /* small contact tiles: a smaller logo and corner button, so the two never touch */
+  .grid .tile-in.icon svg,
+  .grid .tile-in.icon .gmail,
+  .grid .tile-in.icon .lnkd,
+  .grid .tile-in.icon .mdm {
+    width: 40%;
+    height: 40%;
+  }
+  .grid .tile[data-area="gmail"] .icon-chip,
+  .grid .tile[data-area="linked"] .icon-chip,
+  .grid .tile[data-area="medium"] .icon-chip {
+    top: 6px;
+    right: 6px;
+  }
+  /* (the "Copied" confirmation keeps its own width) */
+  .grid .tile[data-area="gmail"] .icon-chip:not(.copied),
+  .grid .tile[data-area="linked"] .icon-chip,
+  .grid .tile[data-area="medium"] .icon-chip {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+  }
+  .grid .tile[data-area="gmail"] .icon-chip svg,
+  .grid .tile[data-area="linked"] .icon-chip svg,
+  .grid .tile[data-area="medium"] .icon-chip svg {
+    width: 14px;
+    height: 14px;
+  }
+  /* intro: the text keeps clear of the corner button */
+  .grid .tile-in.card .card-copy {
+    padding: 18px 50px 18px 18px;
+    gap: 16px;
+  }
+  .grid .intro-av {
+    width: 27cqw;
+  }
+}
+/* narrow phones: the intro tile is one track taller than 2 × 1, so the whole introduction fits */
+@media (max-width: 480px) {
+  .grid .tile[data-area="profile"] {
+    grid-row: span 4;
+  }
+}
 /* responsive grid: 4 columns desktop, 3 tablet, 2 mobile.
    Tiles never ask for more columns than exist, so the grid wraps instead of spilling sideways. */
 /* levitation shadow (outer) + rounded clip (inner) + parallax image */
@@ -1050,10 +1133,23 @@ html.loaded .sk {
   aspect-ratio: 1;
   border-radius: 16px;
 }
-@media (hover: none) {
+/* touch screens and tablet or phone widths, where there is no hover: every tile shows its action
+   button all the time, a little smaller and quieter, as a discreet sign that the tile opens */
+@media (hover: none), (max-width: 1023px) {
   .expand-btn {
     opacity: 1;
     transform: scale(1);
+  }
+  .expand-btn:not(.copied) {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    min-height: 34px;
+    box-shadow: 0 4px 14px rgb(30 27 43/0.1);
+  }
+  .expand-btn svg {
+    width: 16px;
+    height: 16px;
   }
 }
 /* touch screens: tile buttons are always visible, with a 44px tap area */

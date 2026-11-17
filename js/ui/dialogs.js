@@ -81,7 +81,7 @@ function prototypeBlocked() {
   $(".px-fallback", pxOverlay).hidden = false;
   $(".px-loading", pxOverlay).hidden = true;
   $(".px-frame iframe", pxOverlay)?.remove();
-  $("#pxFallbackLink").focus({ preventScroll: true });
+  moveFocus($("#pxFallbackLink"));
 }
 
 function initPrototypeDialog() {

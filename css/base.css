@@ -98,6 +98,10 @@ body {
     0 0 0 3px var(--card),
     0 0 0 6px var(--ink);
 }
+/* focus moved by code after a tap or click (moveFocus in js/lib/dom.js): no ring */
+.quiet-focus:not(.icon-chip):focus-visible {
+  box-shadow: none;
+}
 .sr-only {
   position: absolute;
   width: 1px;

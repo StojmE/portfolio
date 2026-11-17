@@ -1339,6 +1339,17 @@ html.case-open .theme-sw {
     top: 14px;
     bottom: auto;
   }
+  /* the text scrolls under the logo, switch and close button: a soft fade of the page colour
+     behind them keeps it from showing between the buttons */
+  #caseView.open::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto;
+    height: 84px;
+    z-index: 95; /* above the text, under the close button (96) */
+    pointer-events: none;
+    background: linear-gradient(var(--bg) 62%, transparent);
+  }
 }
 @media (min-width: 1100px) {
   .case-toc .toc-home svg {
@@ -1501,25 +1512,32 @@ html.case-open .theme-sw {
 .cs-mode-time:empty {
   display: none;
 }
+/* phones: two lines per option, so a full pill would pinch the text at its rounded ends;
+   the switch, its options and the sliding selection become soft rounded rectangles instead */
 @media (max-width: 480px) {
   .cs-mode-seg {
     height: auto;
-    padding: 4px;
+    padding: 5px;
+    border-radius: 24px;
   }
   .cs-mode-seg button {
     height: auto;
-    padding: 7px 14px;
+    padding: 10px 20px;
+    border-radius: 19px;
+    letter-spacing: 0.07em;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
+    gap: 4px;
+  }
+  .cs-mode-seg .seg-thumb {
+    border-radius: 19px;
   }
   .cs-mode-time {
     margin-left: 0;
     font-size: 10.5px;
   }
 }
-/* phones: the time sits on its own small line under the label */
 .cs-mode-note {
   margin: 0;
   font-size: 13px;
@@ -1528,11 +1546,6 @@ html.case-open .theme-sw {
 }
 .case-body .scan-hide {
   display: none !important;
-}
-@media (max-width: 420px) {
-  .cs-mode-seg button {
-    padding: 0 12px;
-  }
 }
 
 /* the cover already shows the case study's title and tags, so the text versions under it are kept
@@ -1555,4 +1568,26 @@ html.case-open .theme-sw {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+/* touch screens and tablet or phone widths: a small expand badge in the corner of every screenshot
+   says it opens larger (desktop has the hover hint and the cursor bubble instead) */
+@media (hover: none), (max-width: 1023px) {
+  .cs-shot {
+    position: relative;
+  }
+  .cs-shot::after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgb(255 255 255/0.88)
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231e1b2b' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6'/%3E%3C/svg%3E")
+      center/14px no-repeat;
+    box-shadow: 0 3px 10px rgb(30 27 43/0.18);
+    pointer-events: none;
+  }
 }

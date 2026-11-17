@@ -251,7 +251,7 @@ function openCase(tile) {
   const shown = () => {
     caseView.classList.add("open");
     caseView.scrollTop = 0;
-    $("#caseClose").focus({ preventScroll: true });
+    moveFocus($("#caseClose"));
   };
   if (REDUCED_MOTION) shown();
   else zoomTile(tile, { opening: true }, shown);
@@ -268,7 +268,7 @@ function swapCase(tile) {
     inner.style.opacity = "1";
     inner.style.transform = "none";
     caseTitle.setAttribute("tabindex", "-1");
-    caseTitle.focus({ preventScroll: true });
+    moveFocus(caseTitle);
   };
   if (REDUCED_MOTION) return show();
   inner.style.transition = "opacity .25s ease,transform .25s ease";
@@ -294,7 +294,7 @@ function closeCase({ fromHistory = false } = {}) {
     scrollTo(0, savedScroll);
     const canReturn =
       focusBeforeCase?.isConnected && focusBeforeCase !== document.body && focusBeforeCase.offsetParent;
-    (canReturn ? focusBeforeCase : $(".expand-btn", tile))?.focus({ preventScroll: true });
+    moveFocus(canReturn ? focusBeforeCase : $(".expand-btn", tile));
   };
   if (REDUCED_MOTION) {
     caseView.classList.remove("open");

@@ -23,7 +23,7 @@
   color: var(--accent);
   transform: translateY(-2px);
 }
-.icon-chip:focus-visible,
+.icon-chip:focus-visible:not(.quiet-focus),
 .ft-ic:focus-visible,
 .theme-sw:focus-visible {
   box-shadow:

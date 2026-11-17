@@ -1,7 +1,7 @@
 /* Shared components (icon chips, buttons) and the floating controls: logo, day/night switch and filter tabs. */
 
 /* ---- Shared components: icon chips and buttons ---- */
-.icon-chip:focus-visible {
+.icon-chip:focus-visible:not(.quiet-focus) {
   box-shadow:
     0 0 0 3px #ffffff,
     0 0 0 6px var(--ink),
@@ -168,7 +168,7 @@
 }
 /* calmer page: seasonal meadow, its switcher and the click ripple are switched off */
 /* the season scenery follows today's date; no switcher */
-/* brand wordmark: pure type, top-left on desktop, bottom-left on phones */
+/* brand wordmark: pure type, top-left; on phones only over an open case study */
 .brand {
   position: fixed;
   top: 14px;

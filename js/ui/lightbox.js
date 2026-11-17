@@ -35,7 +35,7 @@ function initLightbox() {
   }
   function close() {
     lb.classList.remove("open", "zoomed");
-    opener?.focus();
+    moveFocus(opener, { preventScroll: false });
   }
 
   document.addEventListener("click", (e) => {
@@ -45,7 +45,7 @@ function initLightbox() {
     shots = $$(".cs-shot", shot.closest(".modal") || caseView);
     show(Math.max(0, shots.indexOf(shot)));
     lb.classList.add("open");
-    $(".lb-close", lb).focus();
+    moveFocus($(".lb-close", lb), { preventScroll: false });
   });
   lb.addEventListener("click", (e) => {
     if (e.target.closest(".lb-prev")) return show(index - 1);

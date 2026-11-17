@@ -59,7 +59,6 @@ const SITE = {
       bubble: "Copy my email 📩",
       copy: "Copy email address",
       copied: "Copied email",
-      bubbleCopied: "Copied ✓",
       announce: "Email address copied to clipboard",
     },
     linkedin: {

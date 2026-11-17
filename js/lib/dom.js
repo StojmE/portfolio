@@ -72,6 +72,27 @@ const pageLock = (() => {
   };
 })();
 
+/* moves focus into a dialog, case study or lightbox. Browsers show the keyboard ring on focus moved
+   by code even after a tap or click, so for mouse, touch and pen visitors the element is marked
+   .quiet-focus (no ring) until it loses focus or a key is pressed; keyboard users keep the ring */
+let pointerInput = true; /* until the first key press: a case study opened from a link shows no ring either */
+addEventListener("pointerdown", () => (pointerInput = true), true);
+addEventListener(
+  "keydown",
+  () => {
+    pointerInput = false;
+    $$(".quiet-focus").forEach((el) => el.classList.remove("quiet-focus"));
+  },
+  true,
+);
+function moveFocus(el, { preventScroll = true } = {}) {
+  if (!el) return;
+  el.focus({ preventScroll });
+  if (!pointerInput) return;
+  el.classList.add("quiet-focus");
+  el.addEventListener("blur", () => el.classList.remove("quiet-focus"), { once: true });
+}
+
 /* keeps Tab inside a modal layer, even where `inert` is unsupported */
 const FOCUSABLE = 'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 function trapFocus(container, e, extra = []) {
@@ -104,7 +125,7 @@ function createDialog(overlay, { closeBtn, focus, hideDelay = 280, inert = [], o
     inert.forEach((el) => el.setAttribute("inert", ""));
     requestAnimationFrame(() => {
       overlay.classList.add("open");
-      (focus || closeBtn)?.focus({ preventScroll: true });
+      moveFocus(focus || closeBtn);
       onOpened?.();
     });
   }
@@ -119,7 +140,7 @@ function createDialog(overlay, { closeBtn, focus, hideDelay = 280, inert = [], o
       overlay.hidden = true;
       onHidden?.();
     }, hideDelay);
-    if (restoreFocus) returnFocus?.focus({ preventScroll: true });
+    if (restoreFocus) moveFocus(returnFocus);
   }
   closeBtn?.addEventListener("click", () => close());
   overlay.addEventListener("click", (e) => {
